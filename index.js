@@ -1,5 +1,4 @@
-//https://thecodingtrain.com/tracks/data-and-apis-in-javascript/data/2-data-selfie-app/3-http-post-request
-//2.4 complete
+
 
 const express = require('express');
 // call the express library when you create the app variable 
