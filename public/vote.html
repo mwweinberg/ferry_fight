@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Vote</title>
+    </head>
+    <body>
+        <h1>Vote Page</h1>
+
+        
+        <!-- voting button for boat one -->
+        <input id="boatOneButton" type="button" value="">
+        <!-- voting button for boat one -->
+        <input id="boatTwoButton" type="button" value="">
+        
+
+
+        <script>
+            // function to get the data
+            async function getData() {
+                //get the data
+                const response = await fetch('/api');
+                //parse it
+                const data = await response.json();
+                console.log(data);
+                //console.log(data[0]['ferry']);
+
+                //randomly pick the number for the first boat
+                const boatOneNumber = Math.floor(Math.random() * data.length);
+                //create variables for the name and votes of the boat
+                const boatOneName = data[boatOneNumber]['ferry'];
+                const boatOneVotes = data[boatOneNumber]['votes'];
+                const boatOneShows = data[boatOneNumber]['shows'];
+                const boatOneWinRate = data[boatOneNumber]['winRate'];
+                console.log(boatOneName);
+                console.log(boatOneVotes);
+                console.log(boatOneShows);
+                console.log(boatOneWinRate);
+
+                //updated the voting button with boatOneName
+                document.querySelector('#boatOneButton').value = boatOneName;
+
+                //now remove boatOne from the list to avoid boatOne == boatTwo
+                data.splice(boatOneNumber, 1);
+                //pick a boatTwo
+                const boatTwoNumber = Math.floor(Math.random() * data.length);
+                //create variables for the name and votes of the boat
+                const boatTwoName = data[boatTwoNumber]['ferry'];
+                const boatTwoVotes = data[boatTwoNumber]['votes'];
+                const boatTwoShows = data[boatTwoNumber]['shows'];
+
+                //updated the voting button with boatTwoName
+                document.querySelector('#boatTwoButton').value = boatTwoName;
+            
+
+
+            //function to send the vote for the first boat
+            const firstButton = document.getElementById('boatOneButton');
+            firstButton.addEventListener('click', async event => {
+                //winner info
+                //capture the  name of the ferry
+                const winningFerry = boatOneName;
+                //update vote count
+                const winningVotes = boatOneVotes + 1;
+                //update the shows
+                const winningShows = boatOneShows + 1;
+                //update the win rate (rounded)
+                const winningWinRate = Math.round((winningVotes/winningShows) * 100);
+                
+                //loser info
+                const losingFerry = boatTwoName;
+                //you probably don't really need the losing votes, but whatever
+                const losingVotes = boatTwoVotes;
+                const losingShows = boatTwoShows + 1;
+                //update the win rate (rounded)
+                const losingWinRate = Math.round((losingVotes/losingShows) * 100);
+
+                //create an object (called data here) 
+                const data = { winningFerry, winningVotes, winningShows, winningWinRate, losingFerry, losingVotes, losingShows, losingWinRate };
+                //options for sending the data to the API endpoint
+                const options = {
+                    //we are sending data
+                    method: "POST",
+                    // header specifies that we're sending the data as a JSON
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    //this is the payload
+                    body: JSON.stringify(data)
+                }
+                //use the fetch function to send things to /api using the options
+                //'.then...' is a function that is triggered once fetch is done
+                const response = await fetch('/vote', options);
+                //parsees the response and puts it into a variable
+                const json = await response.json();
+                console.log(json);
+
+            
+
+
+                //reloads the page once the button is clicked
+                location.reload();
+            });
+
+            //function to send the vote for the second boat
+            const secondButton = document.getElementById('boatTwoButton');
+            secondButton.addEventListener('click', async event => {
+                //winner info
+                //capture the  name of the ferry
+                const winningFerry = boatTwoName;
+                //update vote count
+                const winningVotes = boatTwoVotes + 1;
+                //update the shows
+                const winningShows = boatTwoShows + 1;
+                //update the win rate (rounded)
+                const winningWinRate = Math.round((winningVotes/winningShows) * 100);
+                
+                //loser info
+                const losingFerry = boatOneName;
+                //you probably don't really need the losing votes, but whatever
+                const losingVotes = boatOneVotes;
+                const losingShows = boatOneShows + 1;
+                //update the win rate (rounded)
+                const losingWinRate = Math.round((losingVotes/losingShows) * 100);
+
+                //create an object (called data here) 
+                const data = { winningFerry, winningVotes, winningShows, winningWinRate, losingFerry, losingVotes, losingShows, losingWinRate };
+                //options for sending the data to the API endpoint
+                const options = {
+                    //we are sending data
+                    method: "POST",
+                    // header specifies that we're sending the data as a JSON
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    //this is the payload
+                    body: JSON.stringify(data)
+                }
+                //use the fetch function to send things to /api using the options
+                //'.then...' is a function that is triggered once fetch is done
+                const response = await fetch('/vote', options);
+                //parsees the response and puts it into a variable
+                const json = await response.json();
+                console.log(json);
+
+            
+
+
+                //reloads the page once the button is clicked
+                location.reload();
+            });
+                
+
+              
+
+            }
+
+            //run the function
+            getData();
+        </script>
+
+    </body>
+</html>

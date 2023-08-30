@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Add Ferry</title>
+    </head>
+    <body>
+
+        <h1>Add Ferry</h1>
+
+        <label for="ferry">Add Ferry Name</label>
+        <input id="ferry" value="" />
+        <button id="submit">submit</button>
+
+        <script>
+
+
+            const button = document.getElementById('submit');
+            button.addEventListener('click', async event => {
+                //capture the  name of the ferry
+                const ferry = document.getElementById('ferry').value;
+                //set the vote counter
+                const votes = 0;
+                //set the number of time it has been presented
+                const shows = 0;
+                //set the win rate
+                const winRate = 0;
+                //create an object (called data here) that contains lat lon
+                const data = { ferry, votes, shows, winRate };
+                //options for sending the data to the API endpoint
+                const options = {
+                    //we are sending data
+                    method: "POST",
+                    // header specifies that we're sending the data as a JSON
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    //this is the payload
+                    body: JSON.stringify(data)
+                }
+                //use the fetch function to send things to /api using the options
+                //'.then...' is a function that is triggered once fetch is done
+                const response = await fetch('/add_ferry', options);
+                //parsees the response and puts it into a variable
+                const json = await response.json();
+                console.log(json);
+
+                //clears the entry
+                document.getElementById("ferry").value = "";
+            });
+
+        </script>
+
+    </body>
+</html>
+

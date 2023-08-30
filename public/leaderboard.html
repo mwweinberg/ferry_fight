@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title>Leaderboard</title>
+    </head>
+    <body>
+        <h1>Leaderboard</h1>
+
+        <script>
+            // function to get the data
+            async function getData() {
+                //get the data
+                const response = await fetch('/api');
+                //parse it
+                const data = await response.json();
+                console.log(data);
+
+                //sort the data by value
+                data.sort((a, b) => b.winRate - a.winRate);
+
+                //variable for rank number
+                var rank = 1;
+
+                for (item of data) {
+                    //create one larger holder div
+                    const root = document.createElement('div');
+
+                    //create individual divs based for each thing in the DB
+                    const display = document.createElement('div');
+                    //const boatName = document.createElement('div');
+                    //const boatVotes = document.createElement('div');
+                    //const boatShows = document.createElement('div');
+                    //const boatWinRate = document.createElement('div');
+                    
+                    //add relevant content to each div
+                    display.textContent = `${rank}. ${item.ferry} ${item.winRate}%`
+                    //boatName.textContent = `Boat Name: ${item.ferry}`;
+                    //boatVotes.textContent = `Boat Votes: ${item.votes}`;
+                    //boatShows.textContent = `Boat Shows: ${item.shows}`;
+                    //boatWinRate.textContent = `Boat Win Rate: ${item.winRate}`;
+                    
+                        //turn the timestamp into something useful                   
+                    //const dateString = new Date(item.timestamp).toLocaleString();
+                    //date.textContent = dateString;
+
+                    //add all of the thing divs into the holder div
+                    //root.append(display, boatName, boatVotes, boatShows, boatWinRate);
+                    root.append(display);
+                    //add the holder div to the body of the html
+                    document.body.append(root);
+
+                    //increment the rank
+                    rank++;
+                }
+                console.log(data);
+            }
+
+            //run the function
+            getData();
+        </script>
+
+    </body>
+</html>

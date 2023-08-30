@@ -1,0 +1,11 @@
+X Create "add ferry" page
+x refresh page after entry
+-- check to see if there ferry is already there? 
+x Create pick winner page
+x create leaderboard page
+xx is the database really being updated? 
+x sort leaderboard by win rate
+x limit display to zero decimal points
+- style pick winner page
+- style leaderboard page
+

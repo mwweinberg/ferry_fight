@@ -1,0 +1,18 @@
+{
+  "name": "ferry_fight",
+  "version": "1.0.0",
+  "description": "app to rank NYC ferry  names",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ferry"
+  ],
+  "author": "Michael Weinberg",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nedb": "^1.8.0"
+  }
+}
